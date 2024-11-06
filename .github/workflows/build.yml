@@ -1,0 +1,17 @@
+name: Reproducible build
+run-name: ${{ github.actor }} is building 🚀
+on: [push]
+jobs:
+  Build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.2'
+      - run: make all
+      - run: sha256sum fakebridge*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fakebridge
+          path: fakebridge*
